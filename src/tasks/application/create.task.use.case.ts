@@ -1,15 +1,17 @@
-// Capa de aplicacion (Caso de uso)
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common"
+import { ITaskRepositoryToken } from "../domain/task.repository.interface"
 import type { ITaskRepository } from "../domain/task.repository.interface"
-import { Task } from "../domain/task.entity";
+import { Task } from "../domain/task.entity"
+
 @Injectable()
 export class CreateTaskUseCase {
     
     constructor(
-        @Inject('ITaskRepository') private readonly taskRepository: ITaskRepository
+        @Inject(ITaskRepositoryToken) 
+        private readonly taskRepository: ITaskRepository
     ) {}
 
-   async execute(title: string, description: string): Promise<Task> {
+    async execute(title: string, description: string): Promise<Task> {
         const { randomUUID } = await import('crypto')
         
         const task = new Task(
@@ -22,5 +24,4 @@ export class CreateTaskUseCase {
 
         return await this.taskRepository.create(task)
     }
-    
 }

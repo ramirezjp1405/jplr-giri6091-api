@@ -1,21 +1,31 @@
-import { Task } from "@/tasks/domain/task.entity";
-import { ITaskRepository } from "@/tasks/domain/task.repository.interface";
+import { Task } from "../../domain/task.entity";
+import { ITaskRepository } from "../../domain/task.repository.interface";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class TaskRepositoryImpl implements ITaskRepository {
-    private tasks: Task[] = []
+    private tasks: Task[] = [];
 
     async create(task: Task): Promise<Task> {
-        this.tasks.push(task)
-        return task
+        this.tasks.push(task);
+        return task;
     }
 
     async findAll(): Promise<Task[]> {
-        return this.tasks
+        return this.tasks;
     }
 
     async findById(id: string): Promise<Task | null> {
-        return this.tasks.find(task => task.id === id) || null
+        return this.tasks.find(task => task.id === id) || null;
+    }
+async update(task: Task): Promise<void> {
+        const index = this.tasks.findIndex(t => t.id === task.id);
+        if (index !== -1) {
+            this.tasks[index] = task;
+        }
+    }
+
+    async delete(id: string): Promise<void> {
+        this.tasks = this.tasks.filter(task => task.id !== id);
     }
 }

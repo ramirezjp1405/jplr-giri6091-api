@@ -1,9 +1,10 @@
-import { Task } from "./task.entity"
+import { Task } from "./task.entity";
 
 export interface ITaskRepository {
-    create(task: Task): Promise<Task>
-    findAll(): Promise<Task[]>
-    findById(id: string): Promise<Task | null>
+    create(task: Task): Promise<Task>;
+    findAll(): Promise<Task[]>;
+    findById(id: string): Promise<Task | null>;
+    update(task: Task): Promise<void>; 
 }
 
-export const ITaskRepositoryToken = Symbol('ITaskRepository')
+export const ITaskRepositoryToken = Symbol('ITaskRepository');
