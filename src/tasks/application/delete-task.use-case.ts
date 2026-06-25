@@ -9,7 +9,7 @@ export class DeleteTaskUseCase {
         private readonly taskRepository: ITaskRepository
     ) {}
 
-    async execute(id: string): Promise<void> {
+    async execute(id: number): Promise<void> {
         // Primero verificamos que la tarea exista
         const task = await this.taskRepository.findById(id);
         

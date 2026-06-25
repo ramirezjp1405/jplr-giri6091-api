@@ -1,4 +1,4 @@
-import { Controller, Inject, Get, Post, Body, HttpStatus, Param, Patch, Delete, HttpCode } from "@nestjs/common"
+import { Controller, Inject, Get, Post, Body, HttpStatus, Param, Patch, Delete, HttpCode, ParseIntPipe } from "@nestjs/common"
 import { CreateTaskUseCase } from "../../application/create.task.use.case"
 import { UpdateTaskUseCase } from "../../application/update.task.use.case"
 import { DeleteTaskUseCase } from "../../application/delete-task.use-case"
@@ -42,7 +42,7 @@ export class TasksController {
     @ApiParam({ name: 'id', description: 'ID de la tarea (UUID)' })
     @ApiResponse({ status: HttpStatus.OK, description: "Tarea encontrada." })
     @ApiResponse({ status: HttpStatus.NOT_FOUND, description: "Tarea no encontrada." })
-    async findOne(id: string) {
+    async findOne(@Param("id", ParseIntPipe)id:number) {
         return this.getTaskByIdUseCase.execute(id)
     }
 
@@ -59,7 +59,7 @@ export class TasksController {
     @ApiOperation({ summary: "Eliminar una tarea por ID" })
     @ApiParam({ name: 'id', description: 'ID de la tarea (UUID)' })
     @ApiResponse({ status: HttpStatus.NO_CONTENT, description: "Tarea eliminada" })
-    async delete(@Param("id") id: string) {
+    async delete(@Param("id", ParseIntPipe)id:number) {
         return this.deleteTaskUseCase.execute(id)
     }
 }
